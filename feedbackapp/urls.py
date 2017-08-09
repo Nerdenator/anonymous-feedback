@@ -4,5 +4,5 @@ import views
 
 urlpatterns = [
     url('', views.record_feedback, name='feedback'),
-    url('thanks$', views.thanks, name='thanks'),
+    url('thanks', views.thanks, name='thanks'),
 ]

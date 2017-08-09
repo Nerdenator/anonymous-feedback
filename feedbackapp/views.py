@@ -7,11 +7,7 @@ from .models import Feedback
 
 
 def record_feedback(request):
-    if request.method == 'GET':
-        form = FeedbackForm()
-        return render(request, 'feedbackapp/feedback_form.html', {'form': form})
-
-    elif request.method == 'POST':
+    if request.method == 'POST':
         form = FeedbackForm(request.POST)
         if form.is_valid():
             feedback = Feedback()
@@ -19,6 +15,11 @@ def record_feedback(request):
             feedback.feedback_text = form.cleaned_data['feedback']
             feedback.save()
             return HttpResponseRedirect(reverse('feedbackapp:thanks'))
+
+    elif request.method == 'GET':
+        form = FeedbackForm()
+        return render(request, 'feedbackapp/feedback_form.html', {'form': form})
+
 
 
 def thanks(request):
