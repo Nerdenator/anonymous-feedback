@@ -1,24 +1,28 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 from .forms import FeedbackForm
 from .models import Feedback
 
 
 def record_feedback(request):
-    if request.method == 'POST':
+    if request.method == 'GET':
+        form = FeedbackForm()
+        return render(request, 'feedbackapp/feedback_form.html', {'form': form})
+
+    elif request.method == 'POST':
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            # do stuff
             feedback = Feedback()
             feedback.submitter_ip = get_client_ip(request)
             feedback.feedback_text = form.cleaned_data['feedback']
             feedback.save()
-            return HttpResponseRedirect('/thanks/')
-    else:
-        form = FeedbackForm()
+            return HttpResponseRedirect(reverse('feedbackapp:thanks'))
 
-    return render(request, 'feedbackapp/feedback_form.html', {'form': form})
+
+def thanks(request):
+    return render(template_name='feedbackapp/thanks.html',request=request)
 
 
 # https://stackoverflow.com/questions/4581789/how-do-i-get-user-ip-address-in-django

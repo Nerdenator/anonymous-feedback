@@ -5,10 +5,11 @@
     <title>Anonymous Feedback</title>
 </head>
 <body>
-    <form action="/your-feedback/" method="post">
+    <form action="" method="post">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Submit"/>
     </form>
+    <p><i>Note: IP addresses are collected with each submission.</i></p>
 </body>
 </html>
